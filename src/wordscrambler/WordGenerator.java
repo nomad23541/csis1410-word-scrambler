@@ -49,24 +49,21 @@ public class WordGenerator {
 	}
 	
 	/**
-	 * Returns a Character List of the word, if extraCharAmount is greater than zero, it will add random characters to the array
+	 * Returns a Character List of the word, adds random characters twice the size of the word
 	 * Before being returned, the List is shuffled.
 	 * 
-	 * @param extraCharAmount int amount of extra characters to be added
-	 * @return A List<Character> of the word, with extra if parameter is greater than zero.
+	 * @return A List<Character> containing twice the amount of characters in the original word (random characters)
 	 */
-	public List<Character> getCharArray(int extraCharAmount) {
+	public List<Character> getCharArray() {
 		List<Character> chars = new ArrayList<Character>();
 		// first add all characters of word
 		for(char c: this.word.toCharArray()) {
 			chars.add(c);
 		}
 		
-		// now if extraCharAmount is greater than zero, add random characters to the array
-		if(extraCharAmount > 0) {
-			for(int i = 0; i < extraCharAmount; i++) {
-				chars.add((char) (this.rand.nextInt(26) + 'a'));
-			}
+		// add random characters
+		for(int i = 0; i < this.word.length() * 2; i++) {
+			chars.add((char) (this.rand.nextInt(26) + 'a'));
 		}
 		
 		// now randomize the order
