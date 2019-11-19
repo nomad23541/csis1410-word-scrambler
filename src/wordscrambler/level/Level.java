@@ -2,6 +2,7 @@ package wordscrambler.level;
 
 import wordscrambler.CountdownTimer;
 import wordscrambler.WordGenerator;
+import wordscrambler.gui.GamePanel;
 
 /**
  * Class representing a level, holds a timer and WordGenerator for each level.
@@ -28,11 +29,12 @@ public class Level {
 	 * Constructs the Level class, takes in the level number and countdown amount in seconds as parameters
 	 * @param levelNum int representing this level
 	 * @param countdown int in seconds to be used for the timer
+	 * @param gamePanel GamePanel is passed through to update the timer JLabel
 	 */
-	public Level(int levelNum, int countdown) {
+	public Level(int levelNum, int countdown, GamePanel gamePanel) {
 		this.levelNum = levelNum;
 		this.gen = new WordGenerator();
-		this.timer = new CountdownTimer(countdown);
+		this.timer = new CountdownTimer(gamePanel, countdown);
 	}
 	
 	/**

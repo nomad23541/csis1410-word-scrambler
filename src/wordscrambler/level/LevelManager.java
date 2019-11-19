@@ -3,6 +3,8 @@ package wordscrambler.level;
 import java.util.ArrayList;
 import java.util.List;
 
+import wordscrambler.gui.GamePanel;
+
 /**
  * Manages advancing to the next level, or resetting the current level
  * 
@@ -17,20 +19,27 @@ public class LevelManager {
 	 * TODO: this will become a queue type in later revisions
 	 */
 	private List<Level> levels;
+	
 	/**
 	 * Level type that holds the current level
 	 */
 	private Level currentLevel;
 	
 	/**
+	 * GamePanel for updating the timer JLabel
+	 */
+	private GamePanel gamePanel;
+	
+	/**
 	 * Constructs the LevelManager class, initiates the levels List and adds 10 test levels
 	 */
-	public LevelManager() {
+	public LevelManager(GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
 		levels = new ArrayList<Level>();
 		
 		// add levels for testing
 		for(int i = 1; i <= 10; i++) {
-			levels.add(new Level(i, 30));
+			levels.add(new Level(i, 30, gamePanel));
 		}
 		
 		// initially set the current level to first level
@@ -52,7 +61,7 @@ public class LevelManager {
 	 * Resets the current level with a new Level type (creates a new word and such)
 	 */
 	public void resetLevel() {
-		currentLevel = new Level(currentLevel.getLevelNumber(), 30);
+		currentLevel = new Level(currentLevel.getLevelNumber(), 30, gamePanel);
 	}
 	
 	/**

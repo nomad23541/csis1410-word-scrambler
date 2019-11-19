@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -42,15 +44,12 @@ public class GamePanel extends JPanel {
 	 */
 	private List<JButton> buttons;
 	
+	/**
+	 * JLabel used for displaying the countdown timer
+	 */
+	private JLabel timerLbl;
+	
 	public GamePanel() {
-		// setup the level
-		lm = new LevelManager();
-		setupBoxLabels();
-		setupCharButtons();
-		
-		// DEBUGGING
-		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
-		
 		JLabel lblWordmix = new JLabel("Word-Mix");
 		lblWordmix.setForeground(Color.WHITE);
 		lblWordmix.setBackground(Color.WHITE);
@@ -68,16 +67,36 @@ public class GamePanel extends JPanel {
 		JPanel charPanel = new JPanel();
 		charPanel.setBackground(new Color(0, 204, 153));
 		this.add(charPanel);
+
+		// setup the level
+		lm = new LevelManager(this);
+		// start the timer
+		lm.getCurrentLevel().getTimer().start();
+		setupBoxLabels();
+		setupCharButtons();
+		
+		timerLbl = new JLabel();
+		timerLbl.setForeground(Color.WHITE);
+		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
+		
+		// DEBUGGING
+		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
 		
 		// add labels to the boxPanel
 		for(JLabel label : labels) {
 			boxPanel.add(label);
 		}
 		
+		boxPanel.add(timerLbl);
+		
 		// add buttons to the charPanel
 		for(JButton button : buttons) {
 			charPanel.add(button);
 		}
+	}
+	
+	public void updateTimerLabel(int currentTime) {
+		this.timerLbl.setText("" + currentTime);
 	}
 	
 	/**
