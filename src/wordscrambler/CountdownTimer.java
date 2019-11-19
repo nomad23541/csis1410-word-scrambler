@@ -47,7 +47,7 @@ public class CountdownTimer {
 		public void actionPerformed(ActionEvent e) {
 			--duration;
 			
-			if(duration > 0) {
+			if(duration >= 0) {
 				gamePanel.updateTimerLabel(duration);
 			} else {
 				((Timer) (e.getSource())).stop();
