@@ -11,7 +11,6 @@ public class CountdownTimer {
 	
 	public CountdownTimer(int countdown) {
 		this.countdown = countdown;
-		
 	}
 	
 }
