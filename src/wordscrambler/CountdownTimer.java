@@ -8,6 +8,7 @@ package wordscrambler;
 public class CountdownTimer {
 	
 	private int countdown;
+	private String test;
 	
 	public CountdownTimer(int countdown) {
 		this.countdown = countdown;
