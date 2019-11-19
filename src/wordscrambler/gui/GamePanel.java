@@ -48,7 +48,18 @@ public class GamePanel extends JPanel {
 	 */
 	private JLabel timerLbl;
 	
+	private JPanel boxPanel;
+	private JPanel charPanel;
+	private JPanel btnPanel;
+	private JButton btnResetLevel;
+	private JButton btnHint;
+	
 	public GamePanel() {
+		// setup the level
+		lm = new LevelManager(this);
+		setupBoxLabels();
+		setupCharButtons();
+		
 		JLabel lblWordmix = new JLabel("Word-Mix");
 		lblWordmix.setForeground(Color.WHITE);
 		lblWordmix.setBackground(Color.WHITE);
@@ -57,41 +68,46 @@ public class GamePanel extends JPanel {
 		this.add(lblWordmix, BorderLayout.NORTH);
 		
 		this.setBackground(new Color(0, 204, 153));
-		this.setLayout(new GridLayout(0, 1, 0, 0));
-
-		JPanel boxPanel = new JPanel();
+		this.setLayout(new GridLayout(4, 1, 0, 0));
+		
+		boxPanel = new JPanel();
 		boxPanel.setBackground(new Color(0, 204, 153));
 		this.add(boxPanel);
 		
-		JPanel charPanel = new JPanel();
-		charPanel.setBackground(new Color(0, 204, 153));
-		this.add(charPanel);
-
-		// setup the level
-		lm = new LevelManager(this);
-		// start the timer
-		lm.getCurrentLevel().getTimer().start();
-		setupBoxLabels();
-		setupCharButtons();
-		
 		timerLbl = new JLabel();
+		timerLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
 		timerLbl.setForeground(Color.WHITE);
 		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
 		
-		// DEBUGGING
-		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
+		charPanel = new JPanel();
+		charPanel.setBackground(new Color(0, 204, 153));
+		this.add(charPanel);
 		
-		// add labels to the boxPanel
+		btnPanel = new JPanel();
+		btnPanel.setBackground(new Color(0, 204, 153));
+		add(btnPanel);
+		
+		btnResetLevel = new JButton("Reset Level");
+		btnPanel.add(btnResetLevel);
+		
+		btnHint = new JButton("Hint?");
+		btnPanel.add(btnHint);
+		
 		for(JLabel label : labels) {
 			boxPanel.add(label);
 		}
 		
-		boxPanel.add(timerLbl);
-		
-		// add buttons to the charPanel
 		for(JButton button : buttons) {
 			charPanel.add(button);
 		}
+		
+		boxPanel.add(timerLbl);
+		
+		// start the timer
+		lm.getCurrentLevel().getTimer().start();
+		
+		// DEBUGGING
+		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
 	}
 	
 	public void updateTimerLabel(int currentTime) {
@@ -106,6 +122,7 @@ public class GamePanel extends JPanel {
 
 		for(int i = 0; i < lm.getCurrentLevel().getWordGenerator().getWord().length(); i++) {
 			JLabel label = new JLabel("", SwingConstants.CENTER);
+			label.setFont(new Font("Tahoma", Font.BOLD, 16));
 			label.setPreferredSize(new Dimension(40, 40));
 			label.setOpaque(true);
 			label.setBackground(Color.WHITE);
