@@ -7,13 +7,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -111,6 +110,21 @@ public class GamePanel extends JPanel {
 			label.setOpaque(true);
 			label.setBackground(Color.WHITE);
 			label.setForeground(Color.BLACK);
+			
+			// on label click, remove text and show button that contains that text
+			label.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					for(JButton btn : buttons) {
+						if(!btn.isVisible() && btn.getText().equalsIgnoreCase(label.getText().trim())) {
+							btn.setVisible(true);
+							label.setText("");
+							break;
+						}
+					}
+				}
+			});
+			
 			labels.add(label);
 		}
 	}
@@ -128,6 +142,7 @@ public class GamePanel extends JPanel {
 			btn.setPreferredSize(new Dimension(80, 80));
 			btn.setFocusPainted(false);
 			
+			// Hide button and set next fillable Jlabel with that button's text
 			btn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
