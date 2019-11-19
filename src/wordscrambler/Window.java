@@ -3,6 +3,8 @@ package wordscrambler;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import wordscrambler.gui.GamePanel;
 
@@ -14,6 +16,13 @@ import wordscrambler.gui.GamePanel;
 public class Window extends JFrame {
 	
 	public static void main(String[] args) {
+		try {
+			// set swing to use the operating system's default theme
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
 		new Window();
 	}
 	
