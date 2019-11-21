@@ -29,6 +29,7 @@ public class Window extends JFrame {
 	public Window() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(new Dimension(800, 600));
+		this.setLocationRelativeTo(null);
 		
 		// add GamePanel
 		this.setContentPane(new GamePanel());

@@ -13,7 +13,7 @@ import wordscrambler.gui.GamePanel;
 public class Level {
 	
 	/**
-	 * WordGenerator to be used for this Level
+	 * Word to be used for this Level
 	 */
 	private WordGenerator gen;
 	/**

@@ -62,7 +62,7 @@ public class WordGenerator {
 		}
 		
 		// add random characters
-		for(int i = 0; i < this.word.length() * 2; i++) {
+		for(int i = 0; i < this.word.length(); i++) {
 			chars.add((char) (this.rand.nextInt(26) + 'a'));
 		}
 		

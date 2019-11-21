@@ -1,6 +1,7 @@
 package wordscrambler.level;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import wordscrambler.gui.GamePanel;
@@ -12,7 +13,7 @@ import wordscrambler.gui.GamePanel;
  *
  */
 public class LevelManager {
-	
+		
 	/**
 	 * List that contains all the levels in the game
 	 * 
@@ -53,7 +54,10 @@ public class LevelManager {
 	 */
 	public void nextLevel() {
 		for(Level level : levels) {
-			if(level.getLevelNumber() == currentLevel.getLevelNumber() + 1) currentLevel = level;
+			if(level.getLevelNumber() == currentLevel.getLevelNumber() + 1) {
+				currentLevel = level;
+				break;
+			}
 		}
 	}
 	
@@ -61,7 +65,7 @@ public class LevelManager {
 	 * Resets the current level with a new Level type (creates a new word and such)
 	 */
 	public void resetLevel() {
-		currentLevel = new Level(currentLevel.getLevelNumber(), 30, gamePanel);
+		currentLevel = new Level(currentLevel.getLevelNumber(), currentLevel.getTimer().getStartTime(), gamePanel);
 	}
 	
 	/**

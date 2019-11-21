@@ -15,6 +15,7 @@ import wordscrambler.gui.GamePanel;
 public class CountdownTimer {
 	
 	private GamePanel gamePanel;
+	private int startTime;
 	private int duration;
 	
 	private Timer timer;
@@ -22,8 +23,13 @@ public class CountdownTimer {
 	public CountdownTimer(GamePanel gamePanel, int duration) {
 		this.gamePanel = gamePanel;
 		this.duration = duration;
+		this.startTime = duration;
 		
 		timer = new Timer(1000, new TimerListener());
+	}
+	
+	public int getStartTime() {
+		return this.startTime;
 	}
 	
 	public int getDuration() {
@@ -51,7 +57,7 @@ public class CountdownTimer {
 				gamePanel.updateTimerLabel(duration);
 			} else {
 				((Timer) (e.getSource())).stop();
-				// TODO: tell the GamePanel to display a time out message or something
+				gamePanel.displayTimeOut();
 			}
 		}
 		
