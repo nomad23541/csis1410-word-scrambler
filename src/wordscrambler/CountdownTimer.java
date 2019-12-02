@@ -28,6 +28,14 @@ public class CountdownTimer {
 		timer = new Timer(1000, new TimerListener());
 	}
 	
+	public void useHint() {
+		int penalty = Math.round(startTime * .05f);
+		if(duration >= penalty) {
+			duration -= penalty;
+			gamePanel.updateTimerLabel(duration);
+		}
+	}
+	
 	public int getStartTime() {
 		return this.startTime;
 	}

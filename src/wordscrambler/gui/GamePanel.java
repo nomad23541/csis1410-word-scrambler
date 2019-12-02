@@ -79,7 +79,7 @@ public class GamePanel extends JPanel {
 		lblLevel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		lblLevel.setForeground(Color.WHITE);
 		
-		lblLevel.setText("" + lm.getCurrentLevel().getLevelNumber());
+		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
 		
 		headerPanel = new JPanel();
 		headerPanel.setBackground(new Color(0, 204, 153));
@@ -124,6 +124,12 @@ public class GamePanel extends JPanel {
 		btnPanel.add(btnResetLevel);
 		
 		btnHint = new JButton("Hint?");
+		btnHint.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getHint();
+			}
+		});
 		btnPanel.add(btnHint);
 		
 		for(JLabel label : labels) {
@@ -153,7 +159,7 @@ public class GamePanel extends JPanel {
 	public void resetLevel() {
 		lm.getCurrentLevel().getTimer().stop();
 		lm.resetLevel();
-		lblLevel.setText("" + lm.getCurrentLevel().getLevelNumber());
+		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
 		
 		labels.clear();
 		buttons.clear();
@@ -187,7 +193,7 @@ public class GamePanel extends JPanel {
 	public void nextLevel() {
 		lm.getCurrentLevel().getTimer().stop();
 		lm.nextLevel();
-		lblLevel.setText("" + lm.getCurrentLevel().getLevelNumber());
+		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
 		
 		labels.clear();
 		buttons.clear();
@@ -216,6 +222,30 @@ public class GamePanel extends JPanel {
 		lm.getCurrentLevel().getTimer().start();
 		
 		System.out.println("Level word: " + lm.getCurrentLevel().getWordGenerator().getWord());
+	}
+	
+	public void getHint() {
+		lm.getCurrentLevel().getTimer().useHint();
+		String word = lm.getCurrentLevel().getWordGenerator().getWord();
+		int index = 0; 
+		for(int i = 0; i < labels.size(); i++) {
+			JLabel lbl = labels.get(i);
+			if(lbl.getText().isEmpty()) {
+				index = i; 
+				break;
+			}
+		}
+		
+		String charToRemove = "" + word.charAt(index);
+		JButton btnToHide = null;
+		for(JButton button : buttons) {
+			if(button.getText().equalsIgnoreCase(charToRemove)) {
+				btnToHide = button;
+			}
+		}
+		JLabel label = getLabelToFill(labels, charToRemove);
+		label.setText(charToRemove);
+		btnToHide.setVisible(false);
 	}
 	
 	/**
@@ -268,8 +298,10 @@ public class GamePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JLabel label = getLabelToFill(labels, btn.getText());
-					label.setText(btn.getText());
-					btn.setVisible(false);
+					if(label != null) {
+						label.setText(btn.getText());
+						btn.setVisible(false);	
+					}
 				}
 			});
 
@@ -288,10 +320,7 @@ public class GamePanel extends JPanel {
 		for(int i = 0; i < labels.size(); i++) {
 			JLabel label = labels.get(i);
 			
-			System.out.println(labels.size() + " " + i);
-			
 			if(label.getText().isEmpty() && i == labels.size() - 1) {
-				System.out.println("Finished");
 				StringBuilder finalWord = new StringBuilder();
 				for(JLabel lbl : labels) {
 					finalWord.append(lbl.getText());
@@ -300,7 +329,6 @@ public class GamePanel extends JPanel {
 				finalWord.append(lastCharStr);
 								
 				if(finalWord.toString().equalsIgnoreCase(lm.getCurrentLevel().getWordGenerator().getWord())) {
-					System.out.println("Equals");
 					nextLevel();
 				}	
 			}
