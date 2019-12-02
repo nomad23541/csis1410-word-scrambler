@@ -14,12 +14,6 @@ import javax.swing.SwingConstants;
 
 public class TimeoutDialog extends JDialog {
 	
-	/**
-	public static void main(String[] args) {
-		new TimeoutDialog();
-	}
-	*/
-	
 	public TimeoutDialog(JFrame parent, GamePanel gamePanel) {
 		super(parent, "Timeout", true);
 		this.setLocationRelativeTo(parent);

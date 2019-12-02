@@ -1,5 +1,7 @@
 package wordscrambler.level;
 
+import java.io.Serializable;
+
 import wordscrambler.CountdownTimer;
 import wordscrambler.WordGenerator;
 import wordscrambler.gui.GamePanel;
@@ -10,7 +12,12 @@ import wordscrambler.gui.GamePanel;
  * @author Chris Reading
  *
  */
-public class Level {
+public class Level implements Serializable {
+	
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Word to be used for this Level

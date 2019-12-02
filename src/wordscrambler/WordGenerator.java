@@ -1,5 +1,6 @@
 package wordscrambler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +12,13 @@ import java.util.Random;
  * @author Chris Reading
  *
  */
-public class WordGenerator {
+public class WordGenerator implements Serializable {
 	
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * String array of words to randomly be selected
 	 */

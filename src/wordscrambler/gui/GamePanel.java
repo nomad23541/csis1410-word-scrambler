@@ -5,9 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import wordscrambler.io.SaveManager;
+import wordscrambler.io.SerializableActionListener;
+import wordscrambler.io.SerializableMouseAdapter;
 import wordscrambler.level.LevelManager;
 
 /**
@@ -28,8 +30,13 @@ import wordscrambler.level.LevelManager;
  * @author Cannon Rudd
  *
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * LevelManager in order to switch levels, etc
 	 */
@@ -59,9 +66,9 @@ public class GamePanel extends JPanel {
 	private JLabel label_1;
 	private JLabel lblLevel;
 	private JPanel levelPanel;
+	private JButton btnSave;
 	
 	public GamePanel() {
-		// setup the level
 		lm = new LevelManager(this);
 		setupBoxLabels();
 		setupCharButtons();
@@ -115,7 +122,7 @@ public class GamePanel extends JPanel {
 		add(btnPanel);
 		
 		btnResetLevel = new JButton("Reset Level");
-		btnResetLevel.addActionListener(new ActionListener() {
+		btnResetLevel.addActionListener(new SerializableActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				resetLevel();
@@ -124,13 +131,22 @@ public class GamePanel extends JPanel {
 		btnPanel.add(btnResetLevel);
 		
 		btnHint = new JButton("Hint?");
-		btnHint.addActionListener(new ActionListener() {
+		btnHint.addActionListener(new SerializableActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getHint();
 			}
 		});
 		btnPanel.add(btnHint);
+		
+		btnSave = new JButton("Save");
+		btnSave.addActionListener(new SerializableActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ser();
+			}
+		});
+		btnPanel.add(btnSave);
 		
 		for(JLabel label : labels) {
 			boxPanel.add(label);
@@ -146,6 +162,10 @@ public class GamePanel extends JPanel {
 		
 		// DEBUGGING
 		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
+	}
+	
+	private void ser() {
+		SaveManager.serialize(this);
 	}
 	
 	public void updateTimerLabel(int currentTime) {
@@ -263,7 +283,7 @@ public class GamePanel extends JPanel {
 			label.setForeground(Color.BLACK);
 			
 			// on label click, remove text and show button that contains that text
-			label.addMouseListener(new MouseAdapter() {
+			label.addMouseListener(new SerializableMouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					for(JButton btn : buttons) {
@@ -294,7 +314,7 @@ public class GamePanel extends JPanel {
 			btn.setFocusPainted(false);
 			
 			// Hide button and set next fillable Jlabel with that button's text
-			btn.addActionListener(new ActionListener() {
+			btn.addActionListener(new SerializableActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JLabel label = getLabelToFill(labels, btn.getText());

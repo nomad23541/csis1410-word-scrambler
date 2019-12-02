@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import wordscrambler.gui.GamePanel;
+import wordscrambler.io.SaveManager;
 
 /**
  * Window class, handles creating and adding the various panels to be used
@@ -32,7 +33,11 @@ public class Window extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		// add GamePanel
-		this.setContentPane(new GamePanel());
+		if(SaveManager.doesSerialFileExist()) {
+			this.setContentPane(SaveManager.deserialize());
+		} else {
+			this.setContentPane(new GamePanel());
+		}
 		
 		this.setVisible(true);
 	}

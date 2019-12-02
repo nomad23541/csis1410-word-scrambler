@@ -1,7 +1,7 @@
 package wordscrambler.level;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import wordscrambler.gui.GamePanel;
@@ -12,8 +12,13 @@ import wordscrambler.gui.GamePanel;
  * @author Chris Reading
  *
  */
-public class LevelManager {
+public class LevelManager implements Serializable {
 		
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * List that contains all the levels in the game
 	 * 

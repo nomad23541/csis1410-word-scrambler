@@ -1,18 +1,24 @@
 package wordscrambler;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.Timer;
 
 import wordscrambler.gui.GamePanel;
+import wordscrambler.io.SerializableActionListener;
 
 /**
  * TODO: finish this class, GUI must be implemented before I can look into this class some more
  * @author Chris Reading
  *
  */
-public class CountdownTimer {
+public class CountdownTimer implements Serializable {
+	
+	/**
+	 * Serial UID
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private GamePanel gamePanel;
 	private int startTime;
@@ -56,8 +62,13 @@ public class CountdownTimer {
 		timer.stop();
 	}
 	
-	private class TimerListener implements ActionListener {
+	private class TimerListener extends SerializableActionListener {
 		
+		/**
+		 * Serial UID
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public void actionPerformed(ActionEvent e) {
 			--duration;
 			
