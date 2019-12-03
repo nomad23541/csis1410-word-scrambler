@@ -13,11 +13,15 @@ import java.util.Random;
  */
 public class WordGenerator {
 	
-	/**
-	 * String array of words to randomly be selected
-	 */
 	private final String[] words = {
-			"club", "wreck", "fat", "smash", "error", "aback", "flesh", "playground", "connection", "cooing", "bear", "relation", "beneficial", "calculating", "bolt", "quiet", "shirt", "unite", "vacation", "yarn"
+			"dog", "cat", "dad", "mad", "rad", "mix", "rat",
+			"club", "four", "five", "rock", "bear", "beer",
+			"limit", "seven", "aback", "flesh", "smash", "crash",
+			"health", "height", "adware", "seller", "animal", "mother",
+			"central", "develop", "opinion", "element", "science", "request",
+			"building", "cultural", "contempt", "software", "complete", "criminal",
+			"candidate", "housewife", "economist", "landowner", "inflation", "favorite",
+			"leadership", "houseplant", "attraction", "allocation", "depression", "conception"
 	};
 	
 	/**
@@ -33,11 +37,20 @@ public class WordGenerator {
 	 * Constructs the WordGenerator class
 	 * Initializes rand and assigns word to a random string from words[]
 	 */
-	public WordGenerator() {
+	public WordGenerator(int wordLength) {
 		this.rand = new Random();
 		
 		// get random word from words[]
-		this.word = words[rand.nextInt(words.length)];
+		this.word = getRandomString(wordLength);
+	}
+	
+	public String getRandomString(int length) {
+		String word = words[rand.nextInt(words.length)];
+		while(word.length() != length) {
+			word = words[rand.nextInt(words.length)];
+		}
+
+		return word;
 	}
 	
 	/**

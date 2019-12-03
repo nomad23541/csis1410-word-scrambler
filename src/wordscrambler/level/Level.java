@@ -24,6 +24,8 @@ public class Level {
 	 * The level number (ex: 1, 2, 3, 4, etc)
 	 */
 	private int levelNum;
+	
+	private int wordLength;
 
 	/**
 	 * Constructs the Level class, takes in the level number and countdown amount in seconds as parameters
@@ -31,9 +33,10 @@ public class Level {
 	 * @param countdown int in seconds to be used for the timer
 	 * @param gamePanel GamePanel is passed through to update the timer JLabel
 	 */
-	public Level(int levelNum, int countdown, GamePanel gamePanel) {
+	public Level(int levelNum, int wordLength, int countdown, GamePanel gamePanel) {
 		this.levelNum = levelNum;
-		this.gen = new WordGenerator();
+		this.wordLength = wordLength;
+		this.gen = new WordGenerator(wordLength);
 		this.timer = new CountdownTimer(gamePanel, countdown);
 	}
 	
@@ -43,6 +46,10 @@ public class Level {
 	 */
 	public int getLevelNumber() {
 		return this.levelNum;
+	}
+	
+	public int getWordLength() {
+		return this.wordLength;
 	}
 	
 	/**

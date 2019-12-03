@@ -29,10 +29,13 @@ public class CountdownTimer {
 	}
 	
 	public void useHint() {
-		int penalty = Math.round(startTime * .05f);
-		if(duration >= penalty) {
-			duration -= penalty;
-			gamePanel.updateTimerLabel(duration);
+		int penalty = Math.round(startTime * .50f);
+		duration -= penalty;
+		gamePanel.updateTimerLabel(duration);
+		
+		if(duration <= 0) {
+			gamePanel.updateTimerLabel(0);
+			System.out.println("Game Over");
 		}
 	}
 	

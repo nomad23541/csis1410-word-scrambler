@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -227,25 +228,36 @@ public class GamePanel extends JPanel {
 	public void getHint() {
 		lm.getCurrentLevel().getTimer().useHint();
 		String word = lm.getCurrentLevel().getWordGenerator().getWord();
-		int index = 0; 
-		for(int i = 0; i < labels.size(); i++) {
-			JLabel lbl = labels.get(i);
-			if(lbl.getText().isEmpty()) {
-				index = i; 
-				break;
-			}
+		
+		int timesToRun = 1;
+		
+		if(word.length() == 6) {
+			timesToRun = 3;
+		} else if(word.length() >= 7) {
+			timesToRun = 4;
 		}
 		
-		String charToRemove = "" + word.charAt(index);
-		JButton btnToHide = null;
-		for(JButton button : buttons) {
-			if(button.getText().equalsIgnoreCase(charToRemove)) {
-				btnToHide = button;
+		for(int j = 0; j < timesToRun; j++) {
+			int index = 0; 
+			for(int i = 0; i < labels.size(); i++) {
+				JLabel lbl = labels.get(i);
+				if(lbl.getText().isEmpty()) {
+					index = i; 
+					break;
+				}
 			}
+			
+			String charToRemove = "" + word.charAt(index);
+			JButton btnToHide = null;
+			for(JButton button : buttons) {
+				if(button.getText().equalsIgnoreCase(charToRemove)) {
+					btnToHide = button;
+				}
+			}
+			JLabel label = getLabelToFill(labels, charToRemove);
+			label.setText(charToRemove);
+			btnToHide.setVisible(false);	
 		}
-		JLabel label = getLabelToFill(labels, charToRemove);
-		label.setText(charToRemove);
-		btnToHide.setVisible(false);
 	}
 	
 	/**

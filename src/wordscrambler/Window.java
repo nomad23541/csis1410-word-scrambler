@@ -23,6 +23,7 @@ public class Window extends JFrame {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
+		
 		new Window();
 	}
 	

@@ -39,10 +39,12 @@ public class LevelManager {
 		levels = new ArrayList<Level>();
 		
 		// add levels for testing
-		for(int i = 1; i <= 10; i++) {
-			levels.add(new Level(i, 30, gamePanel));
+		int timer = 10;
+		for(int i = 0; i < 8; i++) {
+			levels.add(new Level(i + 1, 3 + i, timer, gamePanel));
+			timer += 5;
 		}
-		
+				
 		// initially set the current level to first level
 		currentLevel = levels.get(0);
 	}
@@ -65,7 +67,7 @@ public class LevelManager {
 	 * Resets the current level with a new Level type (creates a new word and such)
 	 */
 	public void resetLevel() {
-		currentLevel = new Level(currentLevel.getLevelNumber(), currentLevel.getTimer().getStartTime(), gamePanel);
+		currentLevel = new Level(currentLevel.getLevelNumber(), currentLevel.getWordLength(), currentLevel.getTimer().getStartTime(), gamePanel);
 	}
 	
 	/**
