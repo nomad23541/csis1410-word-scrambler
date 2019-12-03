@@ -61,11 +61,6 @@ public class WordGenerator {
 			chars.add(c);
 		}
 		
-		// add random characters
-		for(int i = 0; i < this.word.length(); i++) {
-			chars.add((char) (this.rand.nextInt(26) + 'a'));
-		}
-		
 		// now randomize the order
 		Collections.shuffle(chars);
 		return chars;
