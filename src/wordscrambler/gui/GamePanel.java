@@ -84,10 +84,6 @@ public class GamePanel extends JPanel {
 		levelPanel.setPreferredSize(new Dimension(10, 0));
 		
 		lblLevel = new JLabel("level");
-		lblLevel.setVerticalAlignment(SwingConstants.TOP);
-		lblLevel.setVerticalTextPosition(SwingConstants.TOP);
-		lblLevel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLevel.setHorizontalTextPosition(SwingConstants.LEFT);
 		levelPanel.add(lblLevel);
 		lblLevel.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLevel.setBorder(new EmptyBorder(10, 10, 10, 10));
