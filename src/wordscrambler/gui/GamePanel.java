@@ -18,9 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 import wordscrambler.level.LevelManager;
+import keeptoo.KGradientPanel;
+import java.awt.GridLayout;
+import javax.swing.ImageIcon;
 
 /**
  * GamePanel class, displays the game area
@@ -60,6 +64,7 @@ public class GamePanel extends JPanel {
 	private JLabel label_1;
 	private JLabel lblLevel;
 	private JPanel levelPanel;
+	private KGradientPanel gradientPanel;
 	
 	public GamePanel() {
 		// setup the level
@@ -68,13 +73,21 @@ public class GamePanel extends JPanel {
 		setupCharButtons();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
+		gradientPanel = new KGradientPanel();
+		add(gradientPanel);
+		gradientPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		
 		levelPanel = new JPanel();
-		levelPanel.setBackground(new Color(0, 204, 153));
+		gradientPanel.add(levelPanel);
+		levelPanel.setBackground(new Color(0, 0, 0, 0));
 		levelPanel.setMinimumSize(new Dimension(10, 0));
 		levelPanel.setPreferredSize(new Dimension(10, 0));
-		add(levelPanel);
 		
 		lblLevel = new JLabel("level");
+		lblLevel.setVerticalAlignment(SwingConstants.TOP);
+		lblLevel.setVerticalTextPosition(SwingConstants.TOP);
+		lblLevel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLevel.setHorizontalTextPosition(SwingConstants.LEFT);
 		levelPanel.add(lblLevel);
 		lblLevel.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLevel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -83,37 +96,37 @@ public class GamePanel extends JPanel {
 		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
 		
 		headerPanel = new JPanel();
-		headerPanel.setBackground(new Color(0, 204, 153));
-		add(headerPanel);
+		levelPanel.add(headerPanel);
+		headerPanel.setBackground(new Color(0, 0, 0, 0));
 		headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		label_1 = new JLabel("Word-Mix");
+		label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/WordMix.png")));
 		label_1.setBorder(new EmptyBorder(0, 0, 0, 0));
+		label_1.setBackground(new Color(0, 0, 0, 0));
+		label_1.setOpaque(false);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("Dialog", Font.PLAIN, 25));
-		label_1.setBackground(Color.WHITE);
 		headerPanel.add(label_1);
 		
-		this.setBackground(new Color(0, 204, 153));
-		
 		boxPanel = new JPanel();
-		boxPanel.setBackground(new Color(0, 204, 153));
-		this.add(boxPanel);
+		gradientPanel.add(boxPanel);
+		boxPanel.setBackground(new Color(0, 0, 0, 0));
 		
 		timerLbl = new JLabel();
 		timerLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
 		timerLbl.setForeground(Color.WHITE);
 		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
+		boxPanel.add(timerLbl);
 		
 		charPanel = new JPanel();
-		charPanel.setBackground(new Color(0, 204, 153));
-		this.add(charPanel);
+		gradientPanel.add(charPanel);
+		charPanel.setBackground(new Color(0, 0, 0, 0));
 		
 		btnPanel = new JPanel();
+		gradientPanel.add(btnPanel);
 		btnPanel.setPreferredSize(new Dimension(10, 5));
-		btnPanel.setBackground(new Color(0, 204, 153));
-		add(btnPanel);
+		btnPanel.setBackground(new Color(0, 0, 0, 0));
 		
 		btnResetLevel = new JButton("Reset Level");
 		btnResetLevel.addActionListener(new ActionListener() {
@@ -133,6 +146,8 @@ public class GamePanel extends JPanel {
 		});
 		btnPanel.add(btnHint);
 		
+		this.setBackground(new Color(0, 0, 0, 0));
+		
 		for(JLabel label : labels) {
 			boxPanel.add(label);
 		}
@@ -140,15 +155,25 @@ public class GamePanel extends JPanel {
 		for(JButton button : buttons) {
 			charPanel.add(button);
 		}
-		boxPanel.add(timerLbl);
 		
 		// start the timer
 		lm.getCurrentLevel().getTimer().start();
 		
 		// DEBUGGING
 		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
-	}
 	
+	
+	Timer timer = new Timer(0, new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gradientPanel.repaint();
+			}
+			
+		});
+		timer.start();
+	}
+
 	public void updateTimerLabel(int currentTime) {
 		this.timerLbl.setText("" + currentTime);
 	}
@@ -170,6 +195,7 @@ public class GamePanel extends JPanel {
 		boxPanel.repaint();
 		charPanel.removeAll();
 		charPanel.revalidate();
+		gradientPanel.repaint();
 		charPanel.repaint();
 		
 		setupBoxLabels();
@@ -204,6 +230,7 @@ public class GamePanel extends JPanel {
 		boxPanel.repaint();
 		charPanel.removeAll();
 		charPanel.revalidate();
+		gradientPanel.repaint();
 		charPanel.repaint();
 		
 		setupBoxLabels();
