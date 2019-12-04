@@ -113,7 +113,6 @@ public class GamePanel extends JPanel {
 		timerLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
 		timerLbl.setForeground(Color.WHITE);
 		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
-		boxPanel.add(timerLbl);
 		
 		charPanel = new JPanel();
 		gradientPanel.add(charPanel);
@@ -152,15 +151,16 @@ public class GamePanel extends JPanel {
 			charPanel.add(button);
 		}
 		
+		boxPanel.add(timerLbl);
+		
 		// start the timer
 		lm.getCurrentLevel().getTimer().start();
 		
 		// DEBUGGING
 		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
-	
-	
-	Timer timer = new Timer(0, new ActionListener() {
-
+		
+		// timer to continuously repaint the gradient panel
+		Timer timer = new Timer(0, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				gradientPanel.repaint();
@@ -191,7 +191,6 @@ public class GamePanel extends JPanel {
 		boxPanel.repaint();
 		charPanel.removeAll();
 		charPanel.revalidate();
-		gradientPanel.repaint();
 		charPanel.repaint();
 		
 		setupBoxLabels();
@@ -249,6 +248,11 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void getHint() {
+		// disallow spamming to pass level when timer is 0
+		if(lm.getCurrentLevel().getTimer().getDuration() <= 0) {
+			return;
+		}
+		
 		lm.getCurrentLevel().getTimer().useHint();
 		String word = lm.getCurrentLevel().getWordGenerator().getWord();
 		

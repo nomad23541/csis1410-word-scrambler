@@ -28,6 +28,7 @@ public class Window extends JFrame {
 	}
 	
 	public Window() {
+		this.setTitle("Word-Mix");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(new Dimension(800, 600));
 		this.setLocationRelativeTo(null);
