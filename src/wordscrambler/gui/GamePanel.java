@@ -121,7 +121,7 @@ public class GamePanel extends JPanel {
 		
 		label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/WordMix.png")));
-		label_1.setBorder(new EmptyBorder(0, 0, 0, 0));
+		label_1.setBorder(new EmptyBorder(0, 0, 0, 100));
 		label_1.setBackground(new Color(0, 0, 0, 0));
 		label_1.setOpaque(false);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
