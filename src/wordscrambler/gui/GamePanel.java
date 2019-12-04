@@ -74,17 +74,17 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel() {
 		File save = new File("LevelSave.txt");
+		if(save.exists()) {
+			try (Scanner reader = new Scanner(save)){
+				if(reader.hasNext()) {
+					lm.getCurrentLevel().setLevelNumber(reader.nextInt());
+				}
+			} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+			}
+		}
 		// setup the level
 		lm = new LevelManager(this);
-		try {
-			Scanner reader = new Scanner(save);
-			if(reader.hasNext()) {
-				lm.getCurrentLevel().setLevelNumber(reader.nextInt());
-			}
-		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 		setupBoxLabels();
 		setupCharButtons();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
