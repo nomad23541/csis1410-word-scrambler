@@ -178,7 +178,7 @@ public class GamePanel extends JPanel {
 		btnSave.setVisible(false);
 		btnPanel.add(btnSave);
 		
-		btnPause = new JButton(new ImageIcon(getClass().getClassLoader().getResource("pause.png")));
+		btnPause = new JButton(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
 		btnPause.setBorderPainted(false);
 		btnPause.setFont(new Font("Impact", Font.PLAIN, 20));
 		btnPause.addActionListener(new ActionListener() {
@@ -186,14 +186,14 @@ public class GamePanel extends JPanel {
 				if(!btnSave.isVisible()) {
 					btnSave.setVisible(true);
 					btnResetLevel.setVisible(true);
-					btnPause.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png")));
+					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/play.png")));
 					lm.getCurrentLevel().getTimer().stop();
 					charPanel.setVisible(false);
 				}
 				else {
 					btnSave.setVisible(false);
 					btnResetLevel.setVisible(false);
-					btnPause.setIcon(new ImageIcon(getClass().getClassLoader().getResource("pause.png")));
+					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
 					lm.getCurrentLevel().getTimer().start();
 					charPanel.setVisible(true);
 				}
