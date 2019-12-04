@@ -70,6 +70,7 @@ public class GamePanel extends JPanel {
 	private JPanel levelPanel;
 	private KGradientPanel gradientPanel;
 	private JButton btnSave;
+	private JButton btnPause;
 	
 	public GamePanel() {
 		File save = new File("LevelSave.txt");
@@ -138,16 +139,9 @@ public class GamePanel extends JPanel {
 		btnPanel.setPreferredSize(new Dimension(10, 5));
 		btnPanel.setBackground(new Color(0, 0, 0, 0));
 		
-		btnResetLevel = new JButton("Reset Level");
-		btnResetLevel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				resetLevel();
-			}
-		});
-		btnPanel.add(btnResetLevel);
 		
 		btnHint = new JButton("Hint?");
+		btnHint.setFont(new Font("Impact", Font.PLAIN, 20));
 		btnHint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -156,7 +150,19 @@ public class GamePanel extends JPanel {
 		});
 		btnPanel.add(btnHint);
 		
+		btnResetLevel = new JButton("Reset Level");
+		btnResetLevel.setFont(new Font("Impact", Font.PLAIN, 20));
+		btnResetLevel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				resetLevel();
+			}
+		});
+		btnResetLevel.setVisible(false);
+		btnPanel.add(btnResetLevel);
+		
 		btnSave = new JButton("Save");
+		btnSave.setFont(new Font("Impact", Font.PLAIN, 20));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -169,7 +175,32 @@ public class GamePanel extends JPanel {
 				}
 			}
 		});
+		btnSave.setVisible(false);
 		btnPanel.add(btnSave);
+		
+		btnPause = new JButton(new ImageIcon(getClass().getClassLoader().getResource("pause.png")));
+		btnPause.setBorderPainted(false);
+		btnPause.setFont(new Font("Impact", Font.PLAIN, 20));
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!btnSave.isVisible()) {
+					btnSave.setVisible(true);
+					btnResetLevel.setVisible(true);
+					btnPause.setIcon(new ImageIcon(getClass().getClassLoader().getResource("play.png")));
+					lm.getCurrentLevel().getTimer().stop();
+					charPanel.setVisible(false);
+				}
+				else {
+					btnSave.setVisible(false);
+					btnResetLevel.setVisible(false);
+					btnPause.setIcon(new ImageIcon(getClass().getClassLoader().getResource("pause.png")));
+					lm.getCurrentLevel().getTimer().start();
+					charPanel.setVisible(true);
+				}
+				
+			}
+		});
+		btnPanel.add(btnPause);
 		
 		this.setBackground(new Color(0, 0, 0, 0));
 		
