@@ -9,8 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -65,10 +69,21 @@ public class GamePanel extends JPanel {
 	private JLabel lblLevel;
 	private JPanel levelPanel;
 	private KGradientPanel gradientPanel;
+	private JButton btnSave;
 	
 	public GamePanel() {
+		File save = new File("LevelSave.txt");
 		// setup the level
 		lm = new LevelManager(this);
+		try {
+			Scanner reader = new Scanner(save);
+			if(reader.hasNext()) {
+				lm.getCurrentLevel().setLevelNumber(reader.nextInt());
+			}
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		setupBoxLabels();
 		setupCharButtons();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -140,6 +155,21 @@ public class GamePanel extends JPanel {
 			}
 		});
 		btnPanel.add(btnHint);
+		
+		btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					PrintWriter writer = new PrintWriter(save);
+					writer.println(lm.getCurrentLevel().getLevelNumber());
+					writer.close();
+					btnSave.setText("Saved");
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnPanel.add(btnSave);
 		
 		this.setBackground(new Color(0, 0, 0, 0));
 		

@@ -48,6 +48,14 @@ public class Level {
 		return this.levelNum;
 	}
 	
+	/**
+	 * Sets the level number
+	 * @return
+	 */
+	public void setLevelNumber(int num) {
+		levelNum = num;
+	}
+	
 	public int getWordLength() {
 		return this.wordLength;
 	}
