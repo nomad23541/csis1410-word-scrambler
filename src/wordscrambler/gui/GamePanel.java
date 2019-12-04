@@ -4,19 +4,22 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,10 +28,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import wordscrambler.level.LevelManager;
 import keeptoo.KGradientPanel;
-import java.awt.GridLayout;
-import javax.swing.ImageIcon;
+import wordscrambler.level.LevelManager;
 
 /**
  * GamePanel class, displays the game area
@@ -73,20 +74,26 @@ public class GamePanel extends JPanel {
 	private JButton btnPause;
 	
 	public GamePanel() {
-		File save = new File("LevelSave.txt");
-		if(save.exists()) {
-			try (Scanner reader = new Scanner(save)){
-				if(reader.hasNext()) {
-					lm.setCurrentLevel(lm.getLevelByNumber(reader.nextInt()));
-				}
-			} catch (FileNotFoundException e2) {
-				e2.printStackTrace();
-			}
-		}
 		// setup the level
 		lm = new LevelManager(this);
+				
+		File save = new File("LevelSave.txt");
+		if(save.exists()) {
+			try(BufferedReader reader = new BufferedReader(new FileReader(save))) {
+				String line;
+				while((line = reader.readLine()) != null) {
+					lm.setCurrentLevel(lm.getLevelByNumber(Integer.parseInt(line)));
+				}
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 		setupBoxLabels();
 		setupCharButtons();
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		gradientPanel = new KGradientPanel();
