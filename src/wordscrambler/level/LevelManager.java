@@ -49,6 +49,20 @@ public class LevelManager {
 		currentLevel = levels.get(0);
 	}
 	
+	public Level getLevelByNumber(int num) {
+		for(Level lvl : levels) {
+			if(lvl.getLevelNumber() == num) {
+				return lvl;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void setCurrentLevel(Level lvl) {
+		this.currentLevel = lvl;
+	}
+	
 	/**
 	 * Advance to the next level by get the current level's number and incrementing 1
 	 * 

@@ -77,7 +77,7 @@ public class GamePanel extends JPanel {
 		if(save.exists()) {
 			try (Scanner reader = new Scanner(save)){
 				if(reader.hasNext()) {
-					lm.getCurrentLevel().setLevelNumber(reader.nextInt());
+					lm.setCurrentLevel(lm.getLevelByNumber(reader.nextInt()));
 				}
 			} catch (FileNotFoundException e2) {
 				e2.printStackTrace();
