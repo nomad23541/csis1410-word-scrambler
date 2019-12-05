@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -15,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class YouWinDialog extends JDialog {
-	
 	public YouWinDialog(JFrame parent, GamePanel gamePanel) {
+		
 		super(parent, "You Win", true);
 		this.setUndecorated(true);
 		this.setLocationRelativeTo(parent);
@@ -60,7 +61,7 @@ public class YouWinDialog extends JDialog {
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblTimesOutTry = new JLabel("You Win");
+		JLabel lblTimesOutTry = new JLabel(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/winner.png")));
 		lblTimesOutTry.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblTimesOutTry);
 		
