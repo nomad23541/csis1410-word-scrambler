@@ -188,23 +188,7 @@ public class GamePanel extends JPanel {
 		btnPause.setFont(new Font("Impact", Font.PLAIN, 20));
 		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!btnSave.isVisible()) {
-					btnSave.setVisible(true);
-					btnResetLevel.setVisible(true);
-					btnHint.setVisible(false);
-					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/play.png")));
-					lm.getCurrentLevel().getTimer().stop();
-					charPanel.setVisible(false);
-				}
-				else {
-					btnSave.setVisible(false);
-					btnResetLevel.setVisible(false);
-					btnHint.setVisible(true);
-					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
-					lm.getCurrentLevel().getTimer().start();
-					charPanel.setVisible(true);
-				}
-				
+				togglePause();
 			}
 		});
 		btnPanel.add(btnPause);
@@ -236,6 +220,25 @@ public class GamePanel extends JPanel {
 			
 		});
 		timer.start();
+	}
+	
+	public void togglePause() {
+		if(!btnSave.isVisible()) {
+			btnSave.setVisible(true);
+			btnResetLevel.setVisible(true);
+			btnHint.setVisible(false);
+			btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/play.png")));
+			lm.getCurrentLevel().getTimer().stop();
+			charPanel.setVisible(false);
+		}
+		else {
+			btnSave.setVisible(false);
+			btnResetLevel.setVisible(false);
+			btnHint.setVisible(true);
+			btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
+			lm.getCurrentLevel().getTimer().start();
+			charPanel.setVisible(true);
+		}
 	}
 
 	public void updateTimerLabel(int currentTime) {
@@ -278,6 +281,7 @@ public class GamePanel extends JPanel {
 		lm.getCurrentLevel().getTimer().start();
 		
 		System.out.println("Level word: " + lm.getCurrentLevel().getWordGenerator().getWord());
+		togglePause();
 	}
 	
 	public void nextLevel() {
