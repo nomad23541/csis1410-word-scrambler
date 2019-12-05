@@ -14,8 +14,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Creates the dialog box that appears when time has run out. 
+ *
+ */
 public class TimeoutDialog extends JDialog {
 	
+	/**
+	 * Constructor - Constructs the box with a "retry" button.
+	 * @param parent
+	 * @param gamePanel
+	 */
 	public TimeoutDialog(JFrame parent, GamePanel gamePanel) {
 		super(parent, "Timeout", true);
 		this.setLocationRelativeTo(parent);

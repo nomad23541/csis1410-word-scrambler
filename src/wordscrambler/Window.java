@@ -10,7 +10,6 @@ import wordscrambler.gui.GamePanel;
 
 /**
  * Window class, handles creating and adding the various panels to be used
- * @author Chris Reading
  *
  */
 public class Window extends JFrame {
@@ -27,6 +26,9 @@ public class Window extends JFrame {
 		new Window();
 	}
 	
+	/**
+	 * Constructor - Creates the window. Adds GamePanel to the window.
+	 */
 	public Window() {
 		this.setTitle("Word-Mix");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

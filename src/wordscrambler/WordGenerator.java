@@ -8,11 +8,14 @@ import java.util.Random;
 /**
  * WordGenerator class, in charge of selecting a word.
  * 
- * @author Chris Reading
+ * @author Chris Reading, Cesar Ramirez
  *
  */
 public class WordGenerator {
 	
+	/**
+	 * Creates an array of type String that will hold all the words for the game.
+	 */
 	private final String[] words = {
 			"dog", "cat", "dad", "mad", "rad", "mix", "rat",
 			"club", "four", "five", "rock", "bear", "beer",
@@ -28,6 +31,7 @@ public class WordGenerator {
 	 * The Random type that will be used
 	 */
 	private final Random rand;
+	
 	/**
 	 * The main word that this class will produce
 	 */
@@ -44,6 +48,11 @@ public class WordGenerator {
 		this.word = getRandomString(wordLength);
 	}
 	
+	/**
+	 * Returns a random String based on the generated word.
+	 * @param length
+	 * @return
+	 */
 	public String getRandomString(int length) {
 		String word = words[rand.nextInt(words.length)];
 		while(word.length() != length) {

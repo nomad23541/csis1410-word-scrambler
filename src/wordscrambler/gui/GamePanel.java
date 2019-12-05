@@ -36,6 +36,7 @@ import wordscrambler.level.LevelManager;
  * 
  * @author Chris Reading
  * @author Cannon Rudd
+ * @author Cesar Ramirez
  *
  */
 public class GamePanel extends JPanel {
@@ -60,6 +61,9 @@ public class GamePanel extends JPanel {
 	 */
 	private JLabel timerLbl;
 	
+	/**
+	 * All of the panels, buttons, and labels are initialized here.
+	 */
 	private JPanel boxPanel;
 	private JPanel charPanel;
 	private JPanel btnPanel;
@@ -74,6 +78,9 @@ public class GamePanel extends JPanel {
 	private JLabel lblNewLabel;
 	private JButton btnResetGame;
 	
+	/**
+	 * Constructor - Creates and paints the properties of the game.
+	 */
 	public GamePanel() {
 		// setup the level
 		lm = new LevelManager(this);
@@ -101,6 +108,63 @@ public class GamePanel extends JPanel {
 		add(gradientPanel);
 		gradientPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		headers();
+		
+		boxes();
+		
+		charPanel = new JPanel();
+		gradientPanel.add(charPanel);
+		charPanel.setBackground(new Color(0, 0, 0, 0));
+		
+		menu(save);
+		
+		this.setBackground(new Color(0, 0, 0, 0));
+		
+		for(JLabel label : labels) {
+			boxPanel.add(label);
+		}
+		
+		for(JButton button : buttons) {
+			charPanel.add(button);
+		}
+		
+		boxPanel.add(timerLbl);
+		
+		// start the timer
+		lm.getCurrentLevel().getTimer().start();
+		
+		// DEBUGGING
+		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
+		
+		// timer to continuously repaint the gradient panel
+		Timer timer = new Timer(0, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gradientPanel.repaint();
+			}
+			
+		});
+		timer.start();
+	}
+
+	/**
+	 * Creates the box panel with the blank labels and the timer.
+	 */
+	private void boxes() {
+		boxPanel = new JPanel();
+		gradientPanel.add(boxPanel);
+		boxPanel.setBackground(new Color(0, 0, 0, 0));
+		
+		timerLbl = new JLabel();
+		timerLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
+		timerLbl.setForeground(Color.WHITE);
+		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
+	}
+
+	/**
+	 * Creates the logo and displays the level number at the top.
+	 */
+	private void headers() {
 		headerPnl = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) headerPnl.getLayout();
 		flowLayout.setVgap(0);
@@ -126,20 +190,13 @@ public class GamePanel extends JPanel {
 		lblLevel.setForeground(Color.WHITE);
 		
 		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
-		
-		boxPanel = new JPanel();
-		gradientPanel.add(boxPanel);
-		boxPanel.setBackground(new Color(0, 0, 0, 0));
-		
-		timerLbl = new JLabel();
-		timerLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
-		timerLbl.setForeground(Color.WHITE);
-		timerLbl.setText("" + lm.getCurrentLevel().getTimer().getDuration());
-		
-		charPanel = new JPanel();
-		gradientPanel.add(charPanel);
-		charPanel.setBackground(new Color(0, 0, 0, 0));
-		
+	}
+
+	/**
+	 * Creates and provides functionality for all of the buttons in the menu.
+	 * @param save
+	 */
+	private void menu(File save) {
 		btnPanel = new JPanel();
 		gradientPanel.add(btnPanel);
 		btnPanel.setPreferredSize(new Dimension(10, 5));
@@ -204,36 +261,11 @@ public class GamePanel extends JPanel {
 			}
 		});
 		btnPanel.add(btnPause);
-		
-		this.setBackground(new Color(0, 0, 0, 0));
-		
-		for(JLabel label : labels) {
-			boxPanel.add(label);
-		}
-		
-		for(JButton button : buttons) {
-			charPanel.add(button);
-		}
-		
-		boxPanel.add(timerLbl);
-		
-		// start the timer
-		lm.getCurrentLevel().getTimer().start();
-		
-		// DEBUGGING
-		System.out.println("Level Word: " + lm.getCurrentLevel().getWordGenerator().getWord());
-		
-		// timer to continuously repaint the gradient panel
-		Timer timer = new Timer(0, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				gradientPanel.repaint();
-			}
-			
-		});
-		timer.start();
 	}
 	
+	/**
+	 * Toggles between a visible and non-visible menu depending on its current status.
+	 */
 	public void togglePause() {
 		if(!btnSave.isVisible()) {
 			btnSave.setVisible(true);
@@ -254,15 +286,25 @@ public class GamePanel extends JPanel {
 			charPanel.setVisible(true);
 		}
 	}
-
+	
+	/**
+	 * Updates the current time on the label.
+	 * @param currentTime
+	 */
 	public void updateTimerLabel(int currentTime) {
 		this.timerLbl.setText("" + currentTime);
 	}
 	
+	/**
+	 * Times out the display.
+	 */
 	public void displayTimeOut() {
 		new TimeoutDialog((JFrame) this.getParent().getParent().getParent(), this);
 	}
 	
+	/**
+	 * Resets the game.
+	 */
 	public void resetGame() {
 		File file = new File("LevelSave.txt");
 		if(file.exists()) {
@@ -273,6 +315,9 @@ public class GamePanel extends JPanel {
 		resetLevel();
 	}
 	
+	/**
+	 * Resets the level.
+	 */
 	public void resetLevel() {
 		lm.getCurrentLevel().getTimer().stop();
 		lm.resetLevel();
@@ -308,6 +353,9 @@ public class GamePanel extends JPanel {
 		togglePause();
 	}
 	
+	/**
+	 * Updates to the next level once one level is beaten.
+	 */
 	public void nextLevel() {
 		lm.getCurrentLevel().getTimer().stop();
 		lm.nextLevel((JFrame) this.getParent().getParent().getParent(), this);
@@ -343,6 +391,9 @@ public class GamePanel extends JPanel {
 		System.out.println("Level word: " + lm.getCurrentLevel().getWordGenerator().getWord());
 	}
 	
+	/**
+	 * Adds a character, or a few depending on the size of the word, to the answer. It also docks time.
+	 */
 	public void getHint() {
 		// disallow spamming to pass level when timer is 0
 		if(lm.getCurrentLevel().getTimer().getDuration() <= 0) {

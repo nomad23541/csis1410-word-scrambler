@@ -15,7 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Creates the dialog box for when the game is won.
+ * @author 
+ *
+ */
 public class YouWinDialog extends JDialog {
+	
+	/**
+	 * Constructor - Constructs the dialog box as well as a "restart game" and a "close game" button.
+	 * @param parent
+	 * @param gamePanel
+	 */
 	public YouWinDialog(JFrame parent, GamePanel gamePanel) {
 		
 		super(parent, "You Win", true);
