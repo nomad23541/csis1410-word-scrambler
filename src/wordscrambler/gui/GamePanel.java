@@ -191,6 +191,7 @@ public class GamePanel extends JPanel {
 				if(!btnSave.isVisible()) {
 					btnSave.setVisible(true);
 					btnResetLevel.setVisible(true);
+					btnHint.setVisible(false);
 					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/play.png")));
 					lm.getCurrentLevel().getTimer().stop();
 					charPanel.setVisible(false);
@@ -198,6 +199,7 @@ public class GamePanel extends JPanel {
 				else {
 					btnSave.setVisible(false);
 					btnResetLevel.setVisible(false);
+					btnHint.setVisible(true);
 					btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
 					lm.getCurrentLevel().getTimer().start();
 					charPanel.setVisible(true);
