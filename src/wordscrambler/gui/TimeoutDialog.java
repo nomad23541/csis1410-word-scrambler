@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -42,8 +44,13 @@ public class TimeoutDialog extends JDialog {
 			
 		});
 		
-		JButton btnMainMenu = new JButton("Main Menu");
-		panel.add(btnMainMenu);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				gamePanel.resetLevel();
+				gamePanel.togglePause();
+				dispose();
+			}
+		});
 		
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.CENTER);
