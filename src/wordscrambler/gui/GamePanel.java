@@ -65,13 +65,13 @@ public class GamePanel extends JPanel {
 	private JPanel btnPanel;
 	private JButton btnResetLevel;
 	private JButton btnHint;
-	private JPanel headerPanel;
-	private JLabel label_1;
 	private JLabel lblLevel;
 	private JPanel levelPanel;
 	private KGradientPanel gradientPanel;
 	private JButton btnSave;
 	private JButton btnPause;
+	private JPanel headerPnl;
+	private JLabel lblNewLabel;
 	
 	public GamePanel() {
 		// setup the level
@@ -100,6 +100,18 @@ public class GamePanel extends JPanel {
 		add(gradientPanel);
 		gradientPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		headerPnl = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) headerPnl.getLayout();
+		flowLayout.setVgap(0);
+		flowLayout.setHgap(0);
+		gradientPanel.add(headerPnl);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/WordMix.png")));
+		headerPnl.add(lblNewLabel);
+		headerPnl.setBackground(new Color(0, 0, 0, 0));
+		headerPnl.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
 		levelPanel = new JPanel();
 		gradientPanel.add(levelPanel);
 		levelPanel.setBackground(new Color(0, 0, 0, 0));
@@ -113,20 +125,6 @@ public class GamePanel extends JPanel {
 		lblLevel.setForeground(Color.WHITE);
 		
 		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
-		
-		headerPanel = new JPanel();
-		levelPanel.add(headerPanel);
-		headerPanel.setBackground(new Color(0, 0, 0, 0));
-		headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/WordMix.png")));
-		label_1.setBorder(new EmptyBorder(0, 0, 0, 100));
-		label_1.setBackground(new Color(0, 0, 0, 0));
-		label_1.setOpaque(false);
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Dialog", Font.PLAIN, 25));
-		headerPanel.add(label_1);
 		
 		boxPanel = new JPanel();
 		gradientPanel.add(boxPanel);
