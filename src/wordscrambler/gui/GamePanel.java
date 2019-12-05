@@ -72,6 +72,7 @@ public class GamePanel extends JPanel {
 	private JButton btnPause;
 	private JPanel headerPnl;
 	private JLabel lblNewLabel;
+	private JButton btnResetGame;
 	
 	public GamePanel() {
 		// setup the level
@@ -155,6 +156,17 @@ public class GamePanel extends JPanel {
 		});
 		btnPanel.add(btnHint);
 		
+		btnResetGame = new JButton("Reset Game");
+		btnResetGame.setFont(new Font("Impact", Font.PLAIN, 20));
+		btnResetGame.setVisible(false);
+		btnResetGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resetGame();
+			}
+		});
+		btnPanel.add(btnResetGame);
+		
 		btnResetLevel = new JButton("Reset Level");
 		btnResetLevel.setFont(new Font("Impact", Font.PLAIN, 20));
 		btnResetLevel.addActionListener(new ActionListener() {
@@ -225,6 +237,7 @@ public class GamePanel extends JPanel {
 	public void togglePause() {
 		if(!btnSave.isVisible()) {
 			btnSave.setVisible(true);
+			btnResetGame.setVisible(true);
 			btnResetLevel.setVisible(true);
 			btnHint.setVisible(false);
 			btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/play.png")));
@@ -233,6 +246,7 @@ public class GamePanel extends JPanel {
 		}
 		else {
 			btnSave.setVisible(false);
+			btnResetGame.setVisible(false);
 			btnResetLevel.setVisible(false);
 			btnHint.setVisible(true);
 			btnPause.setIcon(new ImageIcon(GamePanel.class.getResource("/wordscrambler/gui/images/pause.png")));
@@ -247,6 +261,16 @@ public class GamePanel extends JPanel {
 	
 	public void displayTimeOut() {
 		new TimeoutDialog((JFrame) this.getParent().getParent().getParent(), this);
+	}
+	
+	public void resetGame() {
+		File file = new File("LevelSave.txt");
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		lm = new LevelManager(this);
+		resetLevel();
 	}
 	
 	public void resetLevel() {
