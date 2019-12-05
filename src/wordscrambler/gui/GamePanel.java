@@ -310,7 +310,7 @@ public class GamePanel extends JPanel {
 	
 	public void nextLevel() {
 		lm.getCurrentLevel().getTimer().stop();
-		lm.nextLevel();
+		lm.nextLevel((JFrame) this.getParent().getParent().getParent(), this);
 		lblLevel.setText("Level: " + lm.getCurrentLevel().getLevelNumber());
 		
 		labels.clear();

@@ -1,10 +1,12 @@
 package wordscrambler.level;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import wordscrambler.gui.GamePanel;
+import wordscrambler.gui.YouWinDialog;
 
 /**
  * Manages advancing to the next level, or resetting the current level
@@ -68,13 +70,17 @@ public class LevelManager {
 	 * 
 	 * TODO: implement a queue instead of using this wonky for loop to find the next level
 	 */
-	public void nextLevel() {
+	public void nextLevel(JFrame frame, GamePanel panel) {
 		for(Level level : levels) {
 			if(level.getLevelNumber() == currentLevel.getLevelNumber() + 1) {
 				currentLevel = level;
 				break;
 			}
-		}
+			
+			if(level.getLevelNumber() == 8 && currentLevel.getLevelNumber() == 8) {
+				new YouWinDialog(frame, panel);
+			}
+		}		
 	}
 	
 	/**
