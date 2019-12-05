@@ -16,12 +16,6 @@ import javax.swing.SwingConstants;
 
 public class TimeoutDialog extends JDialog {
 	
-	/**
-	public static void main(String[] args) {
-		new TimeoutDialog();
-	}
-	*/
-	
 	public TimeoutDialog(JFrame parent, GamePanel gamePanel) {
 		super(parent, "Timeout", true);
 		this.setLocationRelativeTo(parent);
@@ -35,18 +29,17 @@ public class TimeoutDialog extends JDialog {
 		panel.add(btnRetry);
 		
 		btnRetry.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				gamePanel.resetLevel();
+				gamePanel.resetGame();
+				gamePanel.togglePause();
 				dispose();
-			}
-			
+			}	
 		});
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				gamePanel.resetLevel();
+				gamePanel.resetGame();
 				gamePanel.togglePause();
 				dispose();
 			}
@@ -56,7 +49,7 @@ public class TimeoutDialog extends JDialog {
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblTimesOutTry = new JLabel("Time's out! Try again?");
+		JLabel lblTimesOutTry = new JLabel("Game over. Care to try again?");
 		lblTimesOutTry.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblTimesOutTry);
 		
